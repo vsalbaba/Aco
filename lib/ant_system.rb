@@ -6,7 +6,7 @@ class AntSystem
     @graph = graph
     @trails = initialize_trails
     @alpha = 1
-    @beta = 2
+    @beta = 0.9
   end
 
   def probability(u, v, k)
