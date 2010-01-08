@@ -46,7 +46,6 @@ describe AntSystem do
     before :each do
       @graph = [1, [5], [1, 2], [2, 3], [3, 4], [4, 5], [2, 6], [6, 4]]
       @ant_system = AntSystem.new(@graph)
-
     end
 
     it "should from 1 pick 1" do
@@ -70,7 +69,6 @@ describe AntSystem do
         count[step] ||= 0
         count[step] += 1
       end
-      p count
       count[6].should be_nil
       count[3].should == 3000
     end
@@ -81,6 +79,38 @@ describe AntSystem do
       @graph = [1, [5], [1, 2], [2, 3], [3, 4], [4, 5], [2, 6], [6, 4]]
       @ant_system = AntSystem.new(@graph)
       @ant_system.trails[[2, 6]] += 1
+    end
+
+    it 'should find a route 5 nodes long' do
+      @ant_system.construct_solution.should have(5).nodes
+    end
+
+    it 'should return route through node 6 more times' do
+      count = {}
+      3000.times do
+        solution = @ant_system.construct_solution
+        if solution.include?(6) then
+          count[6] ||= 0
+          count[6] += 1
+        elsif solution.include?(3) then
+          count[3] ||= 0
+          count[3] += 1
+        end
+      end
+      count[6].should > count[3]
+    end
+
+    it 'should still use the route through node 3 sometimes' do
+      count = {}
+      3000.times do
+        solution = @ant_system.construct_solution
+        if solution.include?(3) then
+          count[3] ||= 0
+          count[3] += 1
+        end
+      end
+      count[3].should_not == 0
+      count[3].should_not be_nil
     end
   end
 end
