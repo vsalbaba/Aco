@@ -1,5 +1,5 @@
 class AntSystem
-  attr_accessor :trails, :graph, :alpha, :beta, :ends
+  attr_accessor :trails, :graph, :alpha, :beta, :ends, :alpha, :beta, :evaporation_rate, :quality_coefficient
   def initialize(graph)
     @root = graph.shift
     @ends = graph.shift
